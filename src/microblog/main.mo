@@ -30,7 +30,7 @@ actor {
 
     public shared (msg) func post (text: Text) : async(){
         //make sure the caller is anonymous, for testing purpose only
-        assert(Principal.toText(msg.caller)=="2vxsx-fae"); 
+        // assert(Principal.toText(msg.caller)=="2vxsx-fae"); 
         messages := List.push({text= text; time = Time.now()}, messages);
     };
 
