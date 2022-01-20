@@ -2,13 +2,14 @@ type Time = int;
 type Message = 
  record {
    author: text;
-   "text": text;
+   content: text;
    time: Time;
  };
 service : {
+  clear_follows: () -> ();
   follow: (principal) -> ();
   follows: () -> (vec principal) query;
-  get_name: () -> (text) query;
+  get_name: () -> (opt text);
   post: (text, text) -> ();
   posts: () -> (vec Message) query;
   set_name: (text) -> ();

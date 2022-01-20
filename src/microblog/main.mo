@@ -6,7 +6,7 @@ import Time "mo:base/Time";
 actor {
 
     public type Message = {
-        text: Text;
+        content: Text;
         time: Time.Time;
         author: Text;
     };
@@ -17,13 +17,15 @@ actor {
         post : shared (Text) -> async ();
         posts : shared query () -> async [Message];
         timeline: shared () -> async[Message];
+        get_name: shared () -> async ?Text;
+        set_name: shared (Text) -> async ();
     };
 
     stable var followed : List.List<Principal> = List.nil();
     stable var name : Text = "";
 
-    public shared query func get_name(): async Text{
-        name;
+    public shared func get_name(): async ?Text{
+        ?name;
     };
 
     public shared (msg) func set_name(n: Text): async() {
@@ -31,8 +33,14 @@ actor {
         name := n;
     };
 
-    public shared func follow (id: Principal) : async(){
+    public shared (msg) func follow (id: Principal) : async(){
+        assert(Principal.toText(msg.caller) == "q7og2-3h7sd-fzbfx-ysfeh-ywxeo-c4y6y-3nrqc-rtarm-tie7e-lpxa6-dqe");
         followed :=List.push(id, followed);
+    };
+
+    public shared (msg) func clear_follows () : async(){
+        assert(Principal.toText(msg.caller) == "q7og2-3h7sd-fzbfx-ysfeh-ywxeo-c4y6y-3nrqc-rtarm-tie7e-lpxa6-dqe");
+        followed :=List.nil()
     };
 
     public shared query func follows() : async [Principal] {
@@ -45,7 +53,7 @@ actor {
         //make sure the caller is anonymous, for testing purpose only
         // assert(Principal.toText(msg.caller)=="2vxsx-fae"); 
         assert(password == "icp_training_Task_passw0rd");
-        messages := List.push({text= text; time = Time.now(); author = name}, messages);
+        messages := List.push({content= text; time = Time.now(); author = name}, messages);
     };
 
     public shared query func posts(): async [Message]{

@@ -10,7 +10,7 @@ service : {
   follows: () -> (vec principal) query;
   get_name: () -> (text) query;
   post: (text, text) -> ();
-  posts: (Time) -> (vec Message) query;
+  posts: () -> (vec Message) query;
   set_name: (text) -> ();
-  timeline: (Time) -> (vec Message);
+  timeline: () -> (vec Message);
 }
