@@ -1,22 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>microblog</title>
-    <base href="/" />
-    <link rel="icon" href="favicon.ico" />
-    <link type="text/css" rel="stylesheet" href="main.css" />
-  </head>
-  <body>
-    <main>
-      <img src="logo.png" alt="DFINITY logo" />
-      <form action="#">
-        <label for="name">Enter your name: &nbsp;</label>
-        <input id="name" alt="Name" type="text" />
-        <button type="submit">Click Me!</button>
-      </form>
-      <section id="greeting"></section>
-    </main>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>microblog</title>
+  <base href="/" />
+  <link rel="icon" href="favicon.ico" />
+  <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+</head>
+
+<body>
+  <header>
+    <h1>Microblog</h1>
+  </header>
+  <main>
+    <div id="main_div">
+      <div id="post_div">
+        <label for="message">What do you want to say?</label>
+        <textarea id="message"></textarea>
+        <br />
+        <label for="pwd">Password: </label>
+        <input type="password" id="password"></input>
+        <br />
+        <button id="post">Post</button>
+        <span id="error"></span>
+      </div>
+      <div id="follows_div">
+        <h3>Follows:</h3>
+        <section id="follows"></section>
+      </div>
+      <div id="timeline_div">
+        <h3>Timeline:</h3>
+        <section id="posts"></section>
+      </div>
+    </div>
+    <div id="posts_div">
+      <a href="/">Return To Home Page</a>
+      <h3 id="posts_title"></h3>
+      <section id="personal_posts"></section>
+    </div>
+  </main>
+
+</body>
+
 </html>

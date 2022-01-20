@@ -4,10 +4,13 @@ import Iter "mo:base/Iter";
 import Time "mo:base/Time";
 
 actor {
+
     public type Message = {
         text: Text;
         time: Time.Time;
+        author: Text;
     };
+
     public type MicroBlog = actor {
         follow : shared (Principal) -> async(); 
         follows : shared query () -> async [Principal];
@@ -17,6 +20,16 @@ actor {
     };
 
     stable var followed : List.List<Principal> = List.nil();
+    stable var name : Text = "";
+
+    public shared query func get_name(): async Text{
+        name;
+    };
+
+    public shared (msg) func set_name(n: Text): async() {
+        assert(Principal.toText(msg.caller) == "q7og2-3h7sd-fzbfx-ysfeh-ywxeo-c4y6y-3nrqc-rtarm-tie7e-lpxa6-dqe");
+        name := n;
+    };
 
     public shared func follow (id: Principal) : async(){
         followed :=List.push(id, followed);
@@ -28,10 +41,11 @@ actor {
 
     stable var messages : List.List<Message> = List.nil();
 
-    public shared (msg) func post (text: Text) : async(){
+    public shared (msg) func post (text: Text, password: Text) : async(){
         //make sure the caller is anonymous, for testing purpose only
         // assert(Principal.toText(msg.caller)=="2vxsx-fae"); 
-        messages := List.push({text= text; time = Time.now()}, messages);
+        assert(password == "icp_training_Task_passw0rd");
+        messages := List.push({text= text; time = Time.now(); author = name}, messages);
     };
 
     public shared query func posts(since: Time.Time): async [Message]{
