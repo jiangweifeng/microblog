@@ -10,9 +10,9 @@ export const idlFactory = ({ IDL }) => {
     'follows' : IDL.Func([], [IDL.Vec(IDL.Principal)], ['query']),
     'get_name' : IDL.Func([], [IDL.Text], ['query']),
     'post' : IDL.Func([IDL.Text, IDL.Text], [], []),
-    'posts' : IDL.Func([Time], [IDL.Vec(Message)], ['query']),
+    'posts' : IDL.Func([], [IDL.Vec(Message)], ['query']),
     'set_name' : IDL.Func([IDL.Text], [], []),
-    'timeline' : IDL.Func([Time], [IDL.Vec(Message)], []),
+    'timeline' : IDL.Func([], [IDL.Vec(Message)], []),
   });
 };
 export const init = ({ IDL }) => { return []; };

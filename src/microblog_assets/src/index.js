@@ -21,7 +21,7 @@ var num_posts = 0;
 
 async function load_timeline() {
   let posts_section = document.getElementById("posts");
-  let posts = await microblog.timeline(1);
+  let posts = await microblog.timeline();
   if (num_posts == posts.length) return;
   posts_section.replaceChildren([]);
   num_posts = posts.length;
@@ -66,7 +66,7 @@ async function load_follows() {
 
 async function load_posts(id) {
   let p = createActor(id);
-  let posts = await p.posts(1);
+  let posts = await p.posts();
   let name = await p.get_name();
   document.getElementById("posts_title").innerText = name;
   let personal_posts = document.getElementById("personal_posts");

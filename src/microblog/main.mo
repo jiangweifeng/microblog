@@ -15,8 +15,8 @@ actor {
         follow : shared (Principal) -> async(); 
         follows : shared query () -> async [Principal];
         post : shared (Text) -> async ();
-        posts : shared query (Time.Time) -> async [Message];
-        timeline: shared (Time.Time) -> async[Message];
+        posts : shared query () -> async [Message];
+        timeline: shared () -> async[Message];
     };
 
     stable var followed : List.List<Principal> = List.nil();
@@ -48,15 +48,16 @@ actor {
         messages := List.push({text= text; time = Time.now(); author = name}, messages);
     };
 
-    public shared query func posts(since: Time.Time): async [Message]{
-        List.toArray(List.filter<Message>(messages, func(msg: Message): Bool {msg.time >= since}))
+    public shared query func posts(): async [Message]{
+        List.toArray(messages)
+        // List.toArray(List.filter<Message>(messages, func(msg: Message): Bool {msg.time >= since}))
     };
 
-    public shared func timeline(since: Time.Time): async [Message] {
+    public shared func timeline(): async [Message] {
         var all : List.List<Message> = List.nil();
         for ( id in Iter.fromList(followed)){
             let canister: MicroBlog = actor(Principal.toText(id));
-            let msgs = await canister.posts(since);
+            let msgs = await canister.posts();
             for (msg in Iter.fromArray(msgs)){
                 all :=List.push(msg,all);
             };
